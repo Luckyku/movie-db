@@ -1,7 +1,8 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_BASEURL;
+const BASE_URL = process.env.BASE_URL;
 const API_KEY = import.meta.env.VITE_APIKEY;
+console.log(BASE_URL, API_KEY)
 
 export const getMoviesList = async () => {
   try {
