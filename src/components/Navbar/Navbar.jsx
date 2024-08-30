@@ -10,7 +10,7 @@ const Navbar = ({ onSearch, onClearSearch }) => {
   return (
     <div className="drop-shadow flex items-center justify-between lg:px-20 px-4 py-2 bg-white mb-8 relative">
       <h2 className="lg:text-xl text-base font-medium text-black">
-        Movies <span className="text-green-600 font-bold">DB</span>
+        Movies <span className="text-green-400 font-bold">DB</span>
       </h2>
       <div
         className={`lg:static lg:w-auto lg:bg-none lg:translate-y-0 lg:min-h-fit absolute bg-white w-full left-0 bottom-0 ${
