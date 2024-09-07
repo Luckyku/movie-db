@@ -15,14 +15,27 @@ export const getMoviesList = async () => {
   }
 };
 
-// Fix the typo here
+// get movie details by id
+export const getMovieDetails = async (id) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/movie/${id}`, {
+      params: { api_key: API_KEY, append_to_response: "credits" },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error Fetching movie list:", error);
+    return [];
+  }
+};
+
+// search movies
 export const searchMovie = async (q) => {
   try {
     const response = await axios.get(`${BASE_URL}/search/movie`, {
       params: {
         api_key: API_KEY,
         query: q,
-        page: 1
+        page: 1,
       },
     });
     return response.data.results;
