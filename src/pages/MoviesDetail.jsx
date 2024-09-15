@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import { useParams } from "react-router-dom";
-import { getMovieDetails } from "../utils/api";
+import { getMovieDetails, searchMovie } from "../utils/api";
 import ProfileCard from "../components/Card/ProfilesCard";
+import MovieRating from "../components/Card/MovieRating";
 import { formatDate } from "../utils/helper";
 
 const MoviesDetail = () => {
@@ -11,7 +12,9 @@ const MoviesDetail = () => {
   const BASE_BACKDROP_URL = import.meta.env.VITE_BASEIMGLARGE;
   const [movie, setMovie] = useState(null);
   const [allCast, setAllCast] = useState(false);
-  const initialLimit = 16
+  const [isSearch, setIsSearch] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+  const initialLimit = 16;
   const handleShowAll = () => {
     setAllCast(!allCast);
   };
@@ -33,9 +36,27 @@ const MoviesDetail = () => {
     ? movie.credits.cast
     : movie.credits.cast.slice(0, initialLimit);
   console.log(displayedCast);
+  const handleSearch = async (query) => {
+    if (query.trim()) {
+      const results = await searchMovie(query);
+      setSearchResults(results);
+      setIsSearch(true);
+    } else {
+      setIsSearch(false);
+    }
+  };
+
+  const handleClearSearch = () => {
+    setIsSearch(false);
+    setSearchResults([]);
+  };
   return (
     <>
-      <Navbar />
+      <Navbar
+        onSearch={handleSearch}
+        onClearSearch={handleClearSearch}
+        searchResults={isSearch ? searchResults : null}
+      />
       <div
         className="relative lg:h-[75vh] h-fit bg-cover bg-center flex p-8 gap-3 justify-between flex-col lg:flex-row"
         style={{
@@ -61,42 +82,44 @@ const MoviesDetail = () => {
             <div className="flex gap-4 items-center mb-4">
               <p>{formatDate(movie.release_date)}</p>
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <div className="flex gap-1 items-center">
+              <div className="flex gap-1 items-center truncate ">
                 {movie.genres.map((genre) => (
                   <p key={genre.id}>{genre.name},</p>
                 ))}
               </div>
             </div>
-            <div className="flex gap-2">
-              <div className="rounded-full w-12 h-12 text-lg font-bold  flex items-center justify-center bg-slate-800 mb-3">
+            <div className="flex gap-2 mb-4 items-center">
+              {/* <div className="rounded-full w-12 h-12 text-lg font-bold  flex items-center justify-center bg-slate-800 mb-3">
                 <p>{Math.round(movie.vote_average * 10)}%</p>
-              </div>
-
-              <h4 className="w-8">User Score</h4>
+              </div> */}
+              <MovieRating value={Math.round(movie.vote_average * 10)} />
+              <h4 className="w-8 text-sm">User Score</h4>
             </div>
             <h4 className="text-lg ">Overview :</h4>
             <p className="text-slate-200">{movie.overview}</p>
           </div>
         </div>
       </div>
-      <div className=" w-[92%] flex gap-4  mx-auto overflow-x-auto px-4 mt-8 mb-8 ">
-        {displayedCast.map((actor) => (
-          <ProfileCard
-            key={actor.id}
-            name={actor.name}
-            avatar={actor.profile_path}
-            character={actor.character}
-          />
-        ))}
-        {/* Button to toggle between showing all cast members and the limited view */}
-        {movie.credits.cast.length > initialLimit && (
-          <button
-            onClick={() => handleShowAll()}
-            className="px-4 py-2 bg-slate-400 opacity-40 text-white rounded"
-          >
-            {allCast ? "Show Less" : "View More"}
-          </button>
-        )}
+      <div className="container">
+        <div className=" lg:w-[92%] w-full flex gap-4  mx-auto overflow-x-auto px-4 mt-8 mb-8 ">
+          {displayedCast.map((actor) => (
+            <ProfileCard
+              key={actor.id}
+              name={actor.name}
+              avatar={actor.profile_path}
+              character={actor.character}
+            />
+          ))}
+
+          {movie.credits.cast.length > initialLimit && (
+            <button
+              onClick={() => handleShowAll()}
+              className="px-4 py-2 bg-slate-400 opacity-40 text-white rounded"
+            >
+              {allCast ? "Show Less" : "View More"}
+            </button>
+          )}
+        </div>
       </div>
     </>
   );

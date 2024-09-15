@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import Movies from "../components/Movies/Movies";
+import MoviesSlider from "../components/Movies/MoviesSlider";
 import Footer from "../components/Footer/Footer";
-import { getMoviesList, searchMovie } from "../utils/api";
+import {
+  getMoviesList,
+  getUpcomingMovies,
+  getTopRatedMovies,
+  searchMovie,
+} from "../utils/api";
 
-const Home = () => {
+const MovieLists = () => {
   const [popularMovies, setPopularMovies] = useState([]);
+  const [upcomingMovies, setUpcomingMovies] = useState([]);
+  const [topRated, setTopRated] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
 
@@ -14,7 +22,16 @@ const Home = () => {
       const results = await getMoviesList();
       setPopularMovies(results);
     };
-
+    const fetchUpcomingMovies = async () => {
+      const results = await getUpcomingMovies();
+      setUpcomingMovies(results);
+    };
+    const fetchTopRated = async () => {
+      const results = await getTopRatedMovies();
+      setTopRated(results);
+    };
+    fetchTopRated();
+    fetchUpcomingMovies();
     fetchPopularMovies();
   }, []);
 
@@ -32,6 +49,7 @@ const Home = () => {
     setIsSearch(false);
     setSearchResults([]);
   };
+  console.log(upcomingMovies);
   return (
     <div>
       <Navbar
@@ -39,8 +57,11 @@ const Home = () => {
         onClearSearch={handleClearSearch}
         searchResults={isSearch ? searchResults : null}
       />
-
-      <div className="container-sm mx-auto px-5 lg:px-20 mt-10">
+      <div className="container-sm mx-auto px-5 lg:px-20 mt-10 flex flex-col space-y-8">
+        <h1 className="text-xl font-bold mb-4">Top Rated Movies</h1>
+        <MoviesSlider data={topRated} rate={true} />
+        <h1 className="text-xl font-bold mb-4">Upcoming Movies</h1>
+        <MoviesSlider data={upcomingMovies} />
         <Movies listPopularMovie={popularMovies} />
       </div>
       <Footer />
@@ -48,4 +69,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default MovieLists;

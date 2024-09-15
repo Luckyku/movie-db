@@ -27,6 +27,30 @@ export const getMovieDetails = async (id) => {
     return [];
   }
 };
+// Get Upcoming Movie Lists
+export const getUpcomingMovies = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/movie/upcoming`, {
+      params: { api_key: API_KEY, page: 1 },
+    });
+    return response.data.results;
+  } catch (error) {
+    console.error("Error Fetching movie list:", error);
+    return [];
+  }
+};
+// Get Top Rated Movie Lists
+export const getTopRatedMovies = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/movie/top_rated`, {
+      params: { api_key: API_KEY, page: 1 },
+    });
+    return response.data.results;
+  } catch (error) {
+    console.error("Error Fetching movie list:", error);
+    return [];
+  }
+};
 
 // search movies
 export const searchMovie = async (q) => {
