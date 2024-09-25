@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaMagnifyingGlass, FaXmark } from "react-icons/fa6";
 
-const SearchBar = ({ onSearch, onClearSearch }) => {
+const SearchBar = ({ onSearch, onClearSearch, closeMenu }) => {
   const [query, setQuery] = useState("");
 
   const handleSearch = () => {
@@ -13,7 +13,9 @@ const SearchBar = ({ onSearch, onClearSearch }) => {
   };
   const handleClear = () => {
     onClearSearch(),
-    setQuery('')
+    setQuery(''),
+    closeMenu()
+    
   }
 
   const handleKeyPress = (event) => {

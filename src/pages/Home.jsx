@@ -1,47 +1,38 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar/Navbar";
-import Movies from "../components/Movies/Movies";
+import PopularMovies from "../components/Movies/PopularMovies";
+import UpcomingMovies from "../components/Movies/UpcomingMovies";
+import TopRatedMovies from "../components/Movies/TopRatedMovies";
+import TopRatedSeries from "../components/TvSeries/TopRatedSeries";
+import PopularSeries from "../components/TvSeries/PopularSeries";
 import Footer from "../components/Footer/Footer";
-import { getMoviesList, searchMovie } from "../utils/api";
+import useSearch from "../hooks/useSearch";
+import NowPlayingMovies from "../components/Movies/NowsPlaying";
 
 const Home = () => {
-  const [popularMovies, setPopularMovies] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
-  const [isSearch, setIsSearch] = useState(false);
-
-  useEffect(() => {
-    const fetchPopularMovies = async () => {
-      const results = await getMoviesList();
-      setPopularMovies(results);
-    };
-
-    fetchPopularMovies();
-  }, []);
-
-  const handleSearch = async (query) => {
-    if (query.trim()) {
-      const results = await searchMovie(query);
-      setSearchResults(results);
-      setIsSearch(true);
-    } else {
-      setIsSearch(false);
-    }
-  };
-
-  const handleClearSearch = () => {
-    setIsSearch(false);
-    setSearchResults([]);
-  };
+  const {
+    searchResults,
+    searchTvResults,
+    isSearch,
+    handleSearch,
+    handleClearSearch,
+  } = useSearch();
   return (
     <div>
       <Navbar
         onSearch={handleSearch}
         onClearSearch={handleClearSearch}
         searchResults={isSearch ? searchResults : null}
+        searchTvResults={isSearch ? searchTvResults : null}
       />
 
-      <div className="container-sm mx-auto px-5 lg:px-20 mt-10">
-        <Movies listPopularMovie={popularMovies} />
+      <div className="container-sm mx-auto px-5 lg:px-20 mt-10 flex flex-col gap-y-8">
+        <UpcomingMovies title="Upcoming Movies" />
+        <NowPlayingMovies title={"Now's Playing"} />
+        <TopRatedMovies title="Top Rated Movies" />
+        <PopularMovies title={"Popular Movies"} />
+        <TopRatedSeries title="Top Rated Series" />
+        <PopularSeries title="Popular Series" />
       </div>
       <Footer />
     </div>

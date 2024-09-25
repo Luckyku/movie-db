@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import SearchResults from "../SearchBar/SearchResults";
 import { FaBars, FaXmark } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const Navbar = ({ onSearch, onClearSearch, searchResults }) => {
+const Navbar = ({ onSearch, onClearSearch, searchResults, searchTvResults }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation()
 
   const onToggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -14,9 +15,12 @@ const Navbar = ({ onSearch, onClearSearch, searchResults }) => {
   const redirect = (url) => {
     navigate(`/${url}`);
   };
-  console.log(searchResults);
+  const closeMenu = () => {
+    setMenuOpen(false)
+  };
+  const currentLocation = `${location.pathname}`;
   return (
-    <div className="drop-shadow flex items-center justify-between lg:px-20 px-4 py-2 bg-white mb-8 relative z-10">
+    <div className="drop-shadow flex items-center justify-between lg:px-20 px-4 py-2 bg-white mb-8 relative z-20">
       <h2
         onClick={() => redirect("")}
         className="lg:text-xl text-base font-medium text-black hover:cursor-pointer"
@@ -32,7 +36,11 @@ const Navbar = ({ onSearch, onClearSearch, searchResults }) => {
           <li>
             <a
               onClick={() => redirect("")}
-              className="hover:text-blue-500 hover:cursor-pointer"
+              className={
+                currentLocation === "/"
+                  ? "text-blue-500 hover:cursor-pointer"
+                  : "hover:text-blue-500 hover:cursor-pointer"
+              }
             >
               Home
             </a>
@@ -40,13 +48,24 @@ const Navbar = ({ onSearch, onClearSearch, searchResults }) => {
           <li>
             <a
               onClick={() => redirect("movies")}
-              className="hover:text-blue-500 hover:cursor-pointer"
+              className={
+                currentLocation.startsWith("/movies")
+                  ? "text-blue-500 hover:cursor-pointer"
+                  : "hover:text-blue-500 hover:cursor-pointer"
+              }
             >
               Movie Lists
             </a>
           </li>
           <li>
-            <a href="#" className="text-slate-400 cursor-default">
+            <a
+              onClick={() => redirect("tv-series")}
+              className={
+                currentLocation.startsWith("/tv-series")
+                  ? "text-blue-500 hover:cursor-pointer"
+                  : "hover:text-blue-500 hover:cursor-pointer"
+              }
+            >
               Tv Lists
             </a>
           </li>
@@ -56,14 +75,26 @@ const Navbar = ({ onSearch, onClearSearch, searchResults }) => {
             </a>
           </li>
           <li>
-            <a href="#" className="text-slate-400 cursor-default">
-              Contact
+            <a
+              onClick={() => redirect("about")}
+              className={
+                currentLocation.startsWith("/about")
+                  ? "text-blue-500 hover:cursor-pointer"
+                  : "hover:text-blue-500 hover:cursor-pointer"
+              }
+            >
+              About
             </a>
           </li>
           <li>
             <SearchBar onSearch={onSearch} onClearSearch={onClearSearch} />
             {searchResults ? (
-              <SearchResults results={searchResults} />
+              <SearchResults
+                results={searchResults}
+                tvResults={searchTvResults}
+                closeMenu={closeMenu}
+                onClearSearch={onClearSearch}
+              />
             ) : (
               <div className="hidden"></div>
             )}

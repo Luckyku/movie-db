@@ -8,6 +8,16 @@ const MovieRating = ({ value }) => {
   const circumference = 2 * Math.PI * radius; // Circumference of the circle
   const progress = (normalizedValue / 100) * circumference; // Progress in pixels
 
+  // Function to determine the progress color based on the value
+  const getProgressColor = (value) => {
+    if (value < 25) return "#f87171"; // Red
+    if (value < 50) return "#fbbf24"; // Yellow
+    if (value < 75) return "#3b82f6"; // Blue
+    return "#34d399"; // Green
+  };
+
+  const progressColor = getProgressColor(normalizedValue);
+
   return (
     <div className="relative flex items-center justify-center">
       <svg
@@ -24,20 +34,22 @@ const MovieRating = ({ value }) => {
           r={radius}
           stroke="#e5e7eb"
           strokeWidth={strokeWidth}
-          fill="none"
+          fill="black"
+          opacity={0.5}
         />
-        {/* Progress Circle */}
+        {/* Progress Circle with dynamic color */}
         <circle
           cx="30"
           cy="30"
           r={radius}
-          stroke="#3b82f6"
+          stroke={progressColor} // Use the dynamic color here
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
           strokeDashoffset={circumference - progress}
           fill="none"
           className="transition-all duration-500"
         />
+
         {/* Percentage Text */}
         <text
           x="50%"
@@ -45,7 +57,7 @@ const MovieRating = ({ value }) => {
           dominantBaseline="middle"
           textAnchor="middle"
           className="text-xs font-bold"
-          style={{ fill: "white" }}
+          style={{ fill: "white" }} // Change text color to white
           transform="rotate(90 30 30)" // Counter-rotate the text to keep it upright
         >
           {`${normalizedValue}%`}

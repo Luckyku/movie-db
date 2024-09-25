@@ -35,6 +35,11 @@
   ::-webkit-scrollbar-button {
     display: none;
   }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
 }
 
@@ -44,4 +49,14 @@
 }
 .card-description{
   @apply absolute bottom-0 text-white p-2 truncate bg-slate-900 w-full opacity-90 
+}
+.btn-primary{
+  @apply  py-2 px-2 hover:text-blue-400
+}
+.pages{
+  @apply flex items-center justify-center w-10 py-2 truncate rounded-full
+}
+.pages.active{
+  background-color: #0d6efd;
+  @apply rounded-full text-white
 }

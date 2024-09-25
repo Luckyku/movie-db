@@ -4,7 +4,7 @@ import Footer from "../components/Footer/Footer";
 import useSearch from "../hooks/useSearch";
 import Discoveries from "../components/Discoveries/Discoveries";
 
-const MovieLists = () => {
+const TvSeries = () => {
   const {
     searchResults,
     searchTvResults,
@@ -22,10 +22,10 @@ const MovieLists = () => {
         searchTvResults={isSearch ? searchTvResults : null}
       />
       <div className="container-sm mx-auto px-5  mt-10 flex flex-col space-y-8">
-        <Discoveries type={'movies'} />
+        <Discoveries type={"tv"} />
       </div>
       <Footer />
     </div>
   );
 };
-export default MovieLists;
+export default TvSeries;

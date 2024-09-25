@@ -1,10 +1,9 @@
 import React from "react";
 import Navbar from "../components/Navbar/Navbar";
-import Footer from "../components/Footer/Footer";
+import Hero from "../components/About/Hero"
+import AboutThisPage from "../components/About/AboutThisPage";
 import useSearch from "../hooks/useSearch";
-import Discoveries from "../components/Discoveries/Discoveries";
-
-const MovieLists = () => {
+const About = () => {
   const {
     searchResults,
     searchTvResults,
@@ -12,7 +11,6 @@ const MovieLists = () => {
     handleSearch,
     handleClearSearch,
   } = useSearch();
-
   return (
     <div>
       <Navbar
@@ -21,11 +19,12 @@ const MovieLists = () => {
         searchResults={isSearch ? searchResults : null}
         searchTvResults={isSearch ? searchTvResults : null}
       />
-      <div className="container-sm mx-auto px-5  mt-10 flex flex-col space-y-8">
-        <Discoveries type={'movies'} />
+      <div className="container-sm mx-auto px-5 lg:px-20 mt-10 flex flex-col gap-y-8">
+        <Hero />
+        <AboutThisPage />
       </div>
-      <Footer />
     </div>
   );
 };
-export default MovieLists;
+
+export default About;
