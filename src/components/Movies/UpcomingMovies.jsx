@@ -47,6 +47,7 @@ const UpcomingMovies = ({ title }) => {
                 poster={movie.poster_path}
                 vote_average={movie.vote_average}
                 id={movie.id}
+                type={'movies'}
               />
             ))}
           </div>

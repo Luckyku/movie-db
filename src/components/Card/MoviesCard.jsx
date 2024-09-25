@@ -7,7 +7,7 @@ const MoviesCard = ({ title, date, poster, vote_average, id, movieRating, type }
   const BASE_IMG = import.meta.env.VITE_BASEIMG;
   const navigate = useNavigate();
   const onClickDetails = (id) => {
-    const baseUrl = type == 'movies' ? 'movies' : 'tv-Series'
+    const baseUrl = type == 'movies' ? 'movies' : 'tv-series'
     navigate(`/${baseUrl}/${id}`);
   };
 

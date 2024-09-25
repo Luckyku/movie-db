@@ -52,6 +52,7 @@ const TopRatedMovies = ({ title }) => {
                 vote_average={movie.vote_average}
                 id={movie.id}
                 movieRating={true}
+                type={"movies"}
               />
             ))}
           </div>
