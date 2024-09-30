@@ -1,6 +1,7 @@
 import React from "react";
+import SortByCountry from "./SortByCountry";
 
-const GenreFilter = ({ dataGenre, selectedGenres, toggleGenre }) => {
+const GenreFilter = ({ dataGenre, selectedGenres, toggleGenre, country, handleCountry }) => {
   return (
     <div className="w-full shadow-lg px-4 py-2 border mb-8">
       <p className="text-lg font-bold p-2">Genres</p>
@@ -19,6 +20,7 @@ const GenreFilter = ({ dataGenre, selectedGenres, toggleGenre }) => {
           </button>
         ))}
       </div>
+      <SortByCountry country={country} handleCountry={handleCountry} />
     </div>
   );
 };

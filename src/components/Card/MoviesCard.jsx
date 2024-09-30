@@ -25,12 +25,12 @@ const MoviesCard = ({ title, date, poster, vote_average, id, movieRating, type }
         </div>
       </div>
       <h4
-        className="text-xl font-bold truncate hover:text-blue-500 hover:cursor-pointer"
+        className="md:text-xl text-sm font-bold truncate hover:text-blue-500 hover:cursor-pointer"
         onClick={() => onClickDetails(id)}
       >
         {title}
       </h4>
-      <p className="text-sm text-gray-400">
+      <p className="lg:text-sm text-xs text-gray-400">
         {moment(date).format("MMM D, YYYY")}
       </p>
     </div>

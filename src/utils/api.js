@@ -245,3 +245,19 @@ export const getGenres = async () => {
     return [];
   }
 };
+
+
+// Get region 
+export const getRegion = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/configuration/countries`, {
+      params: {
+        api_key: API_KEY,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error Fetching movie list:", error);
+    return [];
+  }
+}

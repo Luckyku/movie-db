@@ -28,7 +28,7 @@ const Home = () => {
 
       <div className="container-sm mx-auto px-5 lg:px-20 mt-10 flex flex-col gap-y-8">
         <UpcomingMovies title="Upcoming Movies" />
-        <NowPlayingMovies title={"Now's Playing"} />
+        {/* <NowPlayingMovies title={"Now's Playing"} /> */}
         <TopRatedMovies title="Top Rated Movies" />
         <PopularMovies title={"Popular Movies"} />
         <TopRatedSeries title="Top Rated Series" />

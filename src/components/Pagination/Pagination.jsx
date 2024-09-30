@@ -14,7 +14,7 @@ const Pagination = ({
   onSetPage,
 }) => {
   return (
-    <div className="mt-5 ">
+    <div className="mt-8 ">
       <div className="flex flex-wrap justify-center items-center lg:space-x-2 lg:px-4 ">
         <button
           onClick={() => onSetPage(1)}
